@@ -4,6 +4,9 @@
 Run the Forecasting.py using the below command
 
 `python Forecasting.py <equipment_id> <forecast_paramenter> <station_name>`
+
+Sample command
+
 `python Forecasting.py 2 Demand Mumbai`
 
 ##### For Barplot
