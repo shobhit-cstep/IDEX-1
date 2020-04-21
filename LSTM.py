@@ -1,26 +1,30 @@
-from statsmodels.tsa.arima_model import ARIMA
+from keras.models import Sequential
+from keras.layers import LSTM
+from keras.layers import Dense
 from sklearn.metrics import mean_squared_error
-from math import sqrt
 
 
-class ArimaModel(object):
-    def __init__(self, p=5, d=1, q=0):
-        self.p = p
-        self.d = d
-        self.q = q
+class LSTMModel(object):
+    def __init__(self,):
+        self.model = None
 
-    def forecast(self, df_train, df_test, forecast_parameter):
-        train = df_train[forecast_parameter].reset_index(drop=True)
-        test = df_test[forecast_parameter].reset_index(drop=True)
-        history = [x for x in train]
-        predictions = list()
-        for t in range(len(test)):
-            model = ARIMA(history, order=(self.p, self.d, self.q))
-            model_fit = model.fit(disp=0)
-            output = model_fit.forecast()
-            yhat = output[0]
-            predictions.append(yhat)
-            obs = test[t]
-            history.append(obs)
-        error = sqrt(mean_squared_error(test, predictions))
-        return predictions, error
+    def build(self, layer1_parameters=50, layer2_parameters=50, input_shape_n_steps=3, input_shape_n_features=1, loss='mse', metrics='mae'):
+        # define model
+        self.model = Sequential()
+        self.model.add(LSTM(layer1_parameters, activation='relu', return_sequences=True, input_shape=(input_shape_n_steps, input_shape_n_features)))
+        self.model.add(LSTM(layer2_parameters, activation='relu'))
+        self.model.add(Dense(1))
+        self.model.compile(optimizer='adam', loss=loss, metrics=[metrics])
+
+    def fit(self, x_train, y_train, epochs=200, verbose=1):
+        # fit model
+        self.model.fit(x_train, y_train, epochs=epochs, verbose=verbose)
+
+    def forecast(self, x_test, y_test, verbose=0):
+        y_hat = self.model.predict(x_test, verbose=verbose)
+        mse_error = mean_squared_error(y_test, y_hat, squared=False)
+        return y_hat, mse_error
+
+
+
+
