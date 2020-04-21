@@ -6,7 +6,7 @@ def plot_fig(desc, x, ys):
     for y in ys:
         plt.plot(x, y)
         plt.plot(x, y)
-        plt.savefig("plot_"+desc+".png")
+        plt.savefig("figures/plot_"+desc+".png")
 
 
 def split_sequence(sequence, n_steps):

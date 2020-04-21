@@ -3,8 +3,9 @@ from utils import split_sequence
 
 
 class Dataset(object):
-    def __init__(self, df):
-        self.df = pd.read_csv(df)
+    def __init__(self, location_name):
+        data_file = 'data/MO_' + location_name + '_Consumption_Data.csv'
+        self.df = pd.read_csv(data_file)
 
     def equipment_train_test_split(self, equipment_id, train_end_year):
         df_equipment_id = self.df[self.df['Equipment ID'] == equipment_id][['Year', 'Demand']].reset_index(drop=True)

@@ -10,9 +10,7 @@ location_name = sys.argv[3]
 
 train_end_year = 2015
 
-data_file = 'MO_' + location_name + '_Consumption_Data.csv'
-
-dataset = Dataset(data_file)
+dataset = Dataset(location_name)
 df_train, df_test = dataset.equipment_train_test_split(equipment_id, train_end_year)
 
 arima_model = ArimaModel(5, 1, 0)
