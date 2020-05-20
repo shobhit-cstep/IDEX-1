@@ -4,7 +4,7 @@ from utils import split_sequence
 
 class Dataset(object):
     def __init__(self):
-        data_file = 'new_data/expoential-predictions.xlsx'
+        data_file = 'new_data/exponential-predictions.xlsx'
         self.df = pd.read_excel(data_file)
 
     def equipment_train_test_split(self, item_code, train_end_year):
@@ -30,5 +30,4 @@ class Dataset(object):
         x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], n_features))
         time_train = raw_time[:split_index]
         time_test = raw_time[split_index:]
-
         return x_train, y_train, time_train, x_test, y_test, time_test

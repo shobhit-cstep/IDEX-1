@@ -17,7 +17,7 @@ arima_forecast, arima_error_rmse = arima_model.forecast(df_train, df_test, forec
 
 print_observation_against_actual(df_test[forecast_parameter].reset_index(drop=True), arima_forecast)
 
-desc = "arima_" + str(item_code) + "_" + str(train_end_year) + "_onwards"
+desc = "Arima_" + str(item_code) + "_" + str(train_end_year) + "_onwards"
 plot_fig(desc, df_test['Year'].reset_index(drop=True), [df_test[forecast_parameter].reset_index(drop=True), arima_forecast])
 
 print("Error", arima_error_rmse)
